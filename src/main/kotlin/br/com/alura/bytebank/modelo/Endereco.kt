@@ -1,13 +1,13 @@
 package br.com.alura.bytebank.modelo
 
 class Endereco(
-    val logradouro: String = "",
-    val numero: Int = 0,
-    val bairro: String = "",
-    val cidade: String = "",
-    val estado: String = "",
-    val cep: String = "",
-    val complemento: String = ""
+    var logradouro: String = "",
+    var numero: Int = 0,
+    var bairro: String = "",
+    var cidade: String = "",
+    var estado: String = "",
+    var cep: String = "",
+    var complemento: String = ""
 ) {
 
 
@@ -35,5 +35,13 @@ class Endereco(
 
     override fun hashCode(): Int {
         return cep.hashCode()
+    }
+
+    fun completo(): String {
+        return """
+            $logradouro - $numero, $bairro, $cidade - $estado
+            $cep
+            $complemento
+        """.trimIndent()
     }
 }

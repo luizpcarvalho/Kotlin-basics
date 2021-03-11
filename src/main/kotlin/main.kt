@@ -1,30 +1,49 @@
-import br.com.alura.bytebank.exception.SaldoInsuficienteException
+import br.com.alura.bytebank.modelo.Cliente
+import br.com.alura.bytebank.modelo.ContaPoupanca
+import br.com.alura.bytebank.modelo.Endereco
+import br.com.alura.bytebank.teste.testaHighOrderFunction
 
 fun main() {
-    println("início main")
-    funcao1()
-    println("fim main")
+    testaHighOrderFunction()
 }
 
+fun testaRun() {
+    val taxaAnual = 0.05
+    val taxaMensal = taxaAnual / 12
+    println("Taxa mensal $taxaMensal")
 
+    val contaPoupanca = ContaPoupanca(Cliente(nome = "Alex", cpf = "111.111.111-11", senha = 1234), 1000)
 
-fun funcao1() {
-    println("início funcao1")
-    try {
-        funcao2()
-    } catch (e: SaldoInsuficienteException) {
-        e.printStackTrace()
-        println("SaldoInsuficienteException foi pega")
+    contaPoupanca
+        .run {
+            deposita(1000.0)
+            saldo * taxaMensal
+        }
+        .let { rendimentoMensal ->
+            println("Rendimento mensal: $rendimentoMensal")
+        }
+
+    val rendimentoAnual = run {
+        var saldo = contaPoupanca.saldo
+        repeat(12) {
+            saldo += saldo * taxaMensal
+        }
+        saldo
     }
-    println("fim funcao1")
+    println("Simulação do rendimento anual: $rendimentoAnual")
 }
 
-fun funcao2() {
-    println("início funcao2")
-    for (i in 1..5) {
-        println(i)
-        val endereco = Any()
-        throw SaldoInsuficienteException()
+fun testaWith() {
+    with(Endereco()) {
+        logradouro = "Rua Vergueiro"
+        numero = 3185
+        bairro = "Vila Mariana"
+        cidade = "São Paulo"
+        estado = "SP"
+        cep = "02310-063"
+        complemento = "Apartamento"
+        completo()
+    }.let { enderecoCompleto: String ->
+        println(enderecoCompleto)
     }
-    println("fim funcao2")
 }

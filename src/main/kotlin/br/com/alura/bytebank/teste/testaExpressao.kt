@@ -1,7 +1,5 @@
 package br.com.alura.bytebank.teste
 
-import funcao1
-
 fun testaExpressao() {
     println("início main")
     val entrada: String = "1.0"
